@@ -55,7 +55,16 @@ Lo primero que se hizo fue estructurar el proyecto, primero se crearon las carpe
 
 Posterior a ello desarrollamos toda la interfaz y el manejo de la información al llamar a la API, creamos los funciones necesarios, las peticiones necesarios, así como algunas pocas validaciones y la aparición de alertas en caso de que ocurra algo importante.
 
+### Ejecución de la aplicación
 
+Realizaremos la consulta de los datos de las cuentas ligadas a un cliente y veremos el listado de clientes dados de alta.
 
-https://user-images.githubusercontent.com/90817374/169666833-7921bd90-525f-4ee2-a32b-a55c90e7c855.mp4
+>https://user-images.githubusercontent.com/90817374/169667609-247e1483-91e7-422f-9f3d-3e39ce53c9b2.mp4
 
+Realizaremos la actualización de los datos de los clientes y veremos algunas validaciones.
+
+>https://user-images.githubusercontent.com/90817374/169667790-8bc4b85f-3a24-44fa-a518-83a76e06ace7.mp4
+
+Realizaremos la eliminación de un cliente y veremos la alerta correspondiente
+
+>https://user-images.githubusercontent.com/90817374/169667693-9a495e3f-6a7d-4f06-9062-9e7bc8d42cd3.mp4
