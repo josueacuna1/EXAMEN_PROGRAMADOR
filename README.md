@@ -6,7 +6,7 @@ creando una aplicación web, en donde se evaluará el dominio de esta tecnologí
 arquitectura utilizada.arquitectura utilizada.
 
 ### Desarrollo
-#### Base de datosbase de datos
+#### ***Base de datos***
 > Para la parte de base de datos se optó por utilizar como entono a Microsoft Sql Server Management Studio 18.
 
 Lo primero que se hizo fue crear la base de datos, y crear las tablas que contendrían la información, se crearon 3 tablas, una de ellas almacenaría la información de los clientes, otra almacenaría los tipos de cuentas disponibles y la última almacenaría las cuentas ligadas a un usuario.
@@ -53,7 +53,7 @@ Lo primero que se hizo fue estructurar el proyecto, primero se crearon las carpe
 >
 >Estructura del front.
 
-Posterior a ello desarrollamos toda la interfaz y el manejo de la información al llamar a la API, creamos los funciones necesarios, las peticiones necesarios, así como algunas pocas validaciones y la aparición de alertas en caso de que ocurra algo importante.
+Posterior a ello, desarrollamos toda la interfaz y el manejo de la información al llamar a la API, creamos los funciones necesarios, las peticiones necesarios, así como algunas pocas validaciones y la aparición de alertas en caso de que ocurra algo importante.
 
 ### Ejecución de la aplicación
 
