@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <!---------- Hojas de estilo, archivo de js, y CDN´n para utilizar bootstrap y jquery ---------->
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js"></script>
+  <link rel="icon" href="assets/logo_pestaña.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous" />
+  <script src="https://code.jquery.com/jquery-3.0.0.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css" />
+  <title>Clientes</title>
+</head>
+
+<body>
+  <!---------- Etiqueta de estilo para afectar solo los botones de la tabla ---------->
+  <style>
+    .btn {
+      border-radius: 10px;
+      color: white;
+    }
+  </style>
+   <!---------- Nav con el logo de CMV ---------->
+  <nav class="navbar navbar-light fondo">
+    <div class="container-fluid ">
+      <a class="navbar-brand" href="#">
+        <img src="assets/logo.png" alt="" width="25%" height="25%" class="d-inline-block align-text-top" />
+      </a>
+    </div>
+  </nav>
+  <div class="container-lg mt-4 mb-4">
+    <p class="h3" style="text-align: center">
+      Listado de clientes dados de alta
+    </p>
+    <!---------- Alerta para notificar una actualización correcta, alerta oculta ---------->
+    <div class="alert alert-warning alert-dismissible fade show estatusE" role="alert" style="visibility: hidden;">
+      Los datos del cliente <strong> se actualizaron correctamente.</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <!---------- Alerta para notificar una eliminación correcta, alerta oculta ---------->
+    <div class="alert alert-warning alert-dismissible fade show estatus" role="alert" style="visibility: hidden;">
+      Los datos del cliente <strong> se eliminaron correctamente.</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <!---------- Tabla que mostrara la información  ---------->
+  <div class="container-lg">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido Paterno</th>
+          <th scope="col">Apellido Materono</th>
+          <th scope="col">RFC</th>
+          <th scope="col">Curp</th>
+          <th scope="col">Fecha de alta</th>
+          <th scope="col">Consultar</th>
+          <th scope="col">Editar</th>
+          <th scope="col">Eliminar</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+<!---------- Modal de eliminación ---------->
+  <div class="modal fade" id="modal_eliminar" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-light">
+          <h5 class="modal-title">Eliminar</h5>
+        </div>
+        <div class="modal-body">
+          <p>
+            ¿Está seguro de eliminar al cliente
+            <span class="font-weight-bold" id="nombre_cliente"></span>, cuyo
+            id es <span class="font-weight-bold" id="id_cliente"></span>?
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" id="confirmarEliminar" class="btn btn-danger">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!---------- Modal de actualización ---------->
+  <div class="modal fade" id="modal_actualizar"  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-light">
+          <h5 class="modal-title">Actualizar</h5>
+        </div>
+        <div class="modal-body">
+          <form action="">
+            <input type="hidden" id="id_clie" />
+            <div class="form-group">
+              <label for="nombre_clie">Nombre</label>
+              <input type="text" class="form-control" id="nombre_clie" placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="apellidoP_clie">Apellido paterno</label>
+              <input type="text" class="form-control" id="apellidoP_clie" placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="apellidoM_clie">Apellido materno</label>
+              <input type="text" class="form-control" id="apellidoM_clie" placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="rfc_clie">RFC</label>
+              <input type="text" class="form-control" id="rfc_clie" placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="curp_clie">Curp</label>
+              <input type="text" class="form-control" id="curp_clie" placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="fechaA_clie">Fecha de alta</label>
+              <input type="text" class="form-control" id="fechaA_clie" placeholder="">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" id="confirmarEliminar" class="btn btn-warning"
+            onclick="validarDatos()">Actualizar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  //----- Función para determinar si la URL tiene una variable para mostrar alertas anteriores. (alerta actualizacion) -----\\
+  $.urlId = function (name) {
+    let results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results !== null) {
+      $(".estatus").css("visibility", "visible");
+      setTimeout(function () {
+        $('.estatus').fadeOut(5000);
+      });
+    }
+  }
+  //----- Función para determinar si la URL tiene una variable para mostrar alertas anteriores. (alerta eliminación) -----\\
+  $.urlEl = function (name) {
+    let results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results !== null) {
+      $(".estatusE").css("visibility", "visible");
+      setTimeout(function () {
+        $('.estatusE').fadeOut(5000);
+      });
+    }
+  }
+//---------- Despliega modal de eliminar y carga datos del usuario a eliminar ----------\\
+  $(document).on("click", ".Eliminar", function () {
+    let nombreC = $(this).data("nombre");
+    let idC = $(this).data("id");
+    document.getElementById("nombre_cliente").innerHTML = nombreC;
+    document.getElementById("id_cliente").innerHTML = idC;
+    $("#modal_eliminar").modal("show");
+//---------- Confirma los datos a eliminar y llama a una función de ajax para llamar a la API y pasarle el ID que se va a eliminarr ----------\\
+    $(document).on("click", "#confirmarEliminar", function () {
+      $.ajax({
+        method: "DELETE",
+        url: "http://localhost:58683/api/Cliente?id_cliente=" + idC,
+      }).done(function (response) {
+        if (response) {
+          Obtener();
+        } else {
+          alert("Error al eliminar");
+        }
+      });
+      $("#modal_eliminar").modal("hide");
+      window.location = "index.html?el=1";
+    });
+  });
+  //---------- Despliega modal de editar y carga datos del usuario a editar----------\\
+  $(document).on('click', '.Editar', function () {
+    let id_Cli = $(this).data("id");
+    $("#modal_actualizar").modal("show");
+    agregarInfo(id_Cli);
+  });
+  //---------- Redirección a la página de Detalle de cuentas pasándole el ID del cliente por la urlr----------\\
+  $(document).on("click", ".Consultar", function () {
+    let x = "consulta.html?id_cliente=" + $(this).data("id");
+    window.location = "consulta.html?id_cliente=" + $(this).data("id");
+  });
+  //---------- Verifica si hay que mostrar una alerta con respecto a la actualización o eliminación de clientes----------\\
+  window.onload = function () {
+    let status = $.urlId('el');
+    let elimin = $.urlEl('ed');
+    Obtener();
+  };
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+</html>
